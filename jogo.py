@@ -1,7 +1,10 @@
 import random
+import os
+import sys
+
+
 listaPalavras = ["banana", "abacate", "laranja", "uva", "melancia", "abacaxi", "morango"]
 tamanhoLista = len(listaPalavras)
-erros = 0
 
 def gerarPalavra(tamanhoLista):
     numero_aleatorio = random.randint(0, tamanhoLista)
@@ -37,27 +40,44 @@ def pedirLetra(palavra, palavraCriptografada, erros):
         print("Tentativas restantes:", 5-erros)
     return palavraCriptografada, erros
 
-palavra = gerarPalavra(tamanhoLista)
-palavraCriptografada = criptografarPalavra(palavra)
-print(palavra)
-print(palavraCriptografada)
+def jogarNovamente():
+    escolha = int(input("Deseja jogar novamente?\n1. Sim\n2. Não\n"))
+    if escolha == 1:
+        print("Reinicializando o jogo...")
+        jogo()
+    elif escolha == 2:
+        print("Finalizando o jogo...")
+        sys.exit()
+    else:
+        print("Escolha inválida... por favor, digite 1 ou 2")
+        jogarNovamente()
 
 
-while erros < 5:
-    palavraCriptografada, erros = pedirLetra(palavra, palavraCriptografada, erros)
+def jogo():
+    erros = 0
+    palavra = gerarPalavra(tamanhoLista)
+    palavraCriptografada = criptografarPalavra(palavra)
     print(palavraCriptografada)
 
-    if '_' not in palavraCriptografada:
-        print("Parabéns! você acertou todas as letras")
-        break
+
+    while erros < 5:
+        palavraCriptografada, erros = pedirLetra(palavra, palavraCriptografada, erros)
+        print(palavraCriptografada)
+
+        if '_' not in palavraCriptografada:
+            print("Parabéns! você acertou todas as letras")
+            break
 
 
 
-if erros >= 5:
-    print("Você não conseguiu adivinhar a palavra... a palavra era: ", palavra)
+    if erros >= 5:
+        print("Você não conseguiu adivinhar a palavra... a palavra era:",palavra)
 
 
+    jogarNovamente()
 
+
+jogo()
 
 
 
