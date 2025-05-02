@@ -18,7 +18,7 @@ def criptografarPalavra(palavra):
         palavraCriptografada = palavraCriptografada + "_"
     return palavraCriptografada
 
-def pedirLetra(palavra, palavraCriptografada, erros):
+def pedirLetra(palavra, palavraCriptografada, erros, limiteErros):
     letra = input("Insira uma letra: ")
     acerto = 0
 
@@ -37,7 +37,7 @@ def pedirLetra(palavra, palavraCriptografada, erros):
     else:
         print("Você errou... perdeu uma vida")
         erros = erros + 1
-        print("Tentativas restantes:", 5-erros)
+        print("Tentativas restantes:", limiteErros-erros)
     return palavraCriptografada, erros
 
 def jogarNovamente():
@@ -54,14 +54,15 @@ def jogarNovamente():
 
 
 def jogo():
+    limiteErros = 3
     erros = 0
     palavra = gerarPalavra(tamanhoLista)
     palavraCriptografada = criptografarPalavra(palavra)
     print(palavraCriptografada)
 
 
-    while erros < 5:
-        palavraCriptografada, erros = pedirLetra(palavra, palavraCriptografada, erros)
+    while erros < limiteErros:
+        palavraCriptografada, erros = pedirLetra(palavra, palavraCriptografada, erros, limiteErros)
         print(palavraCriptografada)
 
         if '_' not in palavraCriptografada:
@@ -70,7 +71,7 @@ def jogo():
 
 
 
-    if erros >= 5:
+    if erros >= limiteErros:
         print("Você não conseguiu adivinhar a palavra... a palavra era:",palavra)
 
 
